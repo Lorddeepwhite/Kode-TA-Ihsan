@@ -10,13 +10,14 @@ from datetime import date
 import time
 
 
-
-linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/linecountterminal_firebase.txt"
+script_dir = os.path.dirname(__file__)
+linecountpath_rel = "linecountterminal_firebase.txt"
+linecountpath = os.path.join(script_dir, rel_path)
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 # Fetch the service account key JSON file contents
-cred = credentials.Certificate('/home/ihsanfr/Kode_TA_Ihsan/Firebase/ta-ihsan-firebase-adminsdk-dqlgz-233439b4b0.json')
+cred = credentials.Certificate('/Kode_TA_Ihsan/Firebase/ta-ihsan-firebase-adminsdk-dqlgz-233439b4b0.json')
 # Initialize the app with a service account, granting admin privileges
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://ta-ihsan-default-rtdb.firebaseio.com/'
@@ -75,7 +76,7 @@ if not my_file.is_file():
 from_line = 0
 with open(linecountpath, "r") as f :
     from_line = int(f.readline())
-filepath1 = '/home/ihsanfr/Kode_TA_Ihsan/tes.log'
+filepath1 = 'tes.log'
 
 if isfile(filepath1):
     linecount(filepath1)
