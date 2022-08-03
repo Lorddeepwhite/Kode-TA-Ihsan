@@ -1,0 +1,40 @@
+20:19:47,434 INFO  [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Allow external re-configuration: false
+20:19:47,441 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Add resource to configuration: /conf/cesecore.properties
+20:19:47,479 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Added url to configuration source: vfs:/content/ejbca.ear/lib/ejbca-properties.jar/conf/cesecore.properties
+20:19:47,484 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Add resource to configuration: /conf/extendedkeyusage.properties
+20:19:47,484 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Add resource to configuration: /conf/cache.properties
+20:19:47,484 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Add resource to configuration: /conf/database.properties
+20:18:47,484 INFO [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Add resource to configuration: /conf/database.properties
+20:19:47,479 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Added url to configuration source: vfs:/content/ejbca.ear/lib/ejbca-properties.jar/conf/cesecore.properties
+20:19:47,484 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Add resource to configuration: /conf/extendedkeyusage.properties
+20:19:47,484 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Add resource to configuration: /conf/cache.properties
+20:19:47,484 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Add resource to configuration: /conf/database.properties
+20:18:47,484 INFO [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Add resource to configuration: /conf/database.properties
+20:19:47,479 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Added url to configuration source: vfs:/content/ejbca.ear/lib/ejbca-properties.jar/conf/cesecore.properties
+20:19:47,484 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Add resource to configuration: /conf/extendedkeyusage.properties
+20:19:47,434 INFO  [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Allow external re-configuration: false
+20:19:47,434 INFO  [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Allow external re-configuration: false
+20:19:47,484 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Add resource to configuration: /conf/database.properties
+20:18:47,484 INFO [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Add resource to configuration: /conf/database.properties
+20:19:47,479 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Added url to configuration source: vfs:/content/ejbca.ear/lib/ejbca-properties.jar/conf/cesecore.properties
+20:19:47,484 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Add resource to configuration: /conf/extendedkeyusage.properties
+20:19:47,479 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Added url to configuration source: vfs:/content/ejbca.ear/lib/ejbca-properties.jar/conf/cesecore.properties
+20:19:47,484 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Add resource to configuration: /conf/extendedkeyusage.properties
+20:19:47,479 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Added url to configuration source: vfs:/content/ejbca.ear/lib/ejbca-properties.jar/conf/cesecore.properties
+20:19:47,484 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Add resource to configuration: /conf/extendedkeyusage.properties
+20:19:47,479 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Added url to configuration source: vfs:/content/ejbca.ear/lib/ejbca-properties.jar/conf/cesecore.properties
+20:19:47,484 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Add resource to configuration: /conf/extendedkeyusage.properties
+20:19:47,479 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Added url to configuration source: vfs:/content/ejbca.ear/lib/ejbca-properties.jar/conf/cesecore.properties
+20:19:47,484 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Add resource to configuration: /conf/extendedkeyusage.properties
+20:19:47,479 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Added url to configuration source: vfs:/content/ejbca.ear/lib/ejbca-properties.jar/conf/cesecore.properties
+20:19:47,484 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Add resource to configuration: /conf/extendedkeyusage.properties
+20:19:47,434 INFO  [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Allow external re-configuration: false
+20:19:47,441 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Add resource to configuration: /conf/cesecore.properties
+20:19:47,479 DEBUG [org.cesecore.config.ConfigurationHolder] (MSC service thread 1-1) Added url to configuration source: vfs:/content/ejbca.ear/lib/ejbca-properties.jar/conf/cesecore.properties
+13:08:34,935 DEBUG [org.cesecore.certificates.certificate.request.RequestMessageUtils] (default task-50) Message not base64 encoded? Trying as binary: Base64 decode fails, message not base64 encoded: unable to decode base64 data: invalid characters encountered in base64 data
+13:08:34,935 DEBUG [org.cesecore.certificates.certificate.request.RequestMessageUtils] (default task-50) Message not base64 encoded? Trying as binary: Base64 decode fails, message not base64 encoded: unable to decode base64 data: invalid characters encountered in base64 data
+13:48:03,214 INFO  [org.ejbca.ui.web.pub.retrieve.CertificateFinderBean] (default task-1) Invalid DN entered (IllegalArgumentException): '1 or 0=0 union select user, password from ejbca.users #': Unknown object id - '1 or 0 - passed to distinguished name
+20:27:26,308 DEBUG [org.cesecore.util.StringTools] (default task-9) Some chars stripped. Was '<script>alert(“You’ve been XSSed!”)</script>' is now '<script>alert(“You’ve been XSSed/”)</script>'.
+20:27:26,309 INFO  [org.ejbca.ui.web.pub.retrieve.CertificateFinderBean] (default task-9) Invalid DN entered (IllegalArgumentException): <script>alert(“You’ve been XSSed!”)</script>: badly formatted directory string
+13:40:44,879 DEBUG [org.cesecore.util.StringTools] (default task-23) Some chars stripped. Was 'CN=adminCA;cat /etc/passwd' is now 'CN=adminCA/cat /etc/passwd'.
+13:40:44,880 DEBUG [org.cesecore.util.StringTools] (default task-23) Some chars stripped. Was 'CN=adminCA;cat /etc/passwd' is now 'CN=adminCA/cat /etc/passwd'.

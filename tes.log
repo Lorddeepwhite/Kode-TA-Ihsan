@@ -1,0 +1,129 @@
+*   Trying 127.0.0.1:8442...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 8442 (#0)
+* ALPN, offering h2
+* ALPN, offering http/1.1
+* successfully set certificate verify locations:
+*   CAfile: /etc/ssl/certs/ca-certificates.crt
+  CApath: /etc/ssl/certs
+} [5 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+} [512 bytes data]
+* TLSv1.3 (IN), TLS handshake, Server hello (2):
+{ [85 bytes data]
+* TLSv1.2 (IN), TLS handshake, Certificate (11):
+{ [2567 bytes data]
+* TLSv1.2 (OUT), TLS alert, unknown CA (560):
+} [2 bytes data]
+* SSL certificate problem: self signed certificate in certificate chain
+* Closing connection 0
+*   Trying 127.0.0.1:8442...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 8442 (#0)
+* ALPN, offering h2
+* ALPN, offering http/1.1
+* successfully set certificate verify locations:
+*   CAfile: /etc/ssl/certs/ca-certificates.crt
+  CApath: /etc/ssl/certs
+} [5 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+} [512 bytes data]
+* TLSv1.3 (IN), TLS handshake, Server hello (2):
+{ [85 bytes data]
+* TLSv1.2 (IN), TLS handshake, Certificate (11):
+{ [2567 bytes data]
+* TLSv1.2 (OUT), TLS alert, unknown CA (560):
+} [2 bytes data]
+* SSL certificate problem: self signed certificate in certificate chain
+* Closing connection 0
+*   Trying 127.0.0.1:8442...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 8442 (#0)
+* ALPN, offering h2
+* ALPN, offering http/1.1
+* successfully set certificate verify locations:
+*   CAfile: /etc/ssl/certs/ca-certificates.crt
+  CApath: /etc/ssl/certs
+} [5 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+} [250 bytes data]
+* OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to localhost:8442 
+* Closing connection 0
+Listing...
+apache2-bin/focal-updates,focal-security 2.4.41-4ubuntu3.12 amd64 [upgradable from: 2.4.41-4ubuntu3.11]
+apache2-data/focal-updates,focal-updates,focal-security,focal-security 2.4.41-4ubuntu3.12 all [upgradable from: 2.4.41-4ubuntu3.11]
+apache2-utils/focal-updates,focal-security 2.4.41-4ubuntu3.12 amd64 [upgradable from: 2.4.41-4ubuntu3.11]
+apache2/focal-updates,focal-security 2.4.41-4ubuntu3.12 amd64 [upgradable from: 2.4.41-4ubuntu3.11]
+apt-transport-https/focal-updates,focal-updates 2.0.9 all [upgradable from: 2.0.8]
+apt-utils/focal-updates 2.0.9 amd64 [upgradable from: 2.0.8]
+apt/focal-updates 2.0.9 amd64 [upgradable from: 2.0.8]
+code/stable,stable 1.69.2-1658162013 amd64 [upgradable from: 1.68.0-1654690107]
+curl/focal-updates,focal-security 7.68.0-1ubuntu2.12 amd64 [upgradable from: 7.68.0-1ubuntu2.11]
+dbeaver-ce/unknown 22.1.2 amd64 [upgradable from: 22.1.0]
+dirmngr/focal-updates,focal-security 2.2.19-3ubuntu2.2 amd64 [upgradable from: 2.2.19-3ubuntu2.1]
+firefox-locale-en/focal-updates,focal-security 102.0+build2-0ubuntu0.20.04.1 amd64 [upgradable from: 101.0.1+build1-0ubuntu0.20.04.1]
+firefox/focal-updates,focal-security 102.0+build2-0ubuntu0.20.04.1 amd64 [upgradable from: 101.0.1+build1-0ubuntu0.20.04.1]
+gir1.2-javascriptcoregtk-4.0/focal-updates,focal-security 2.36.4-0ubuntu0.20.04.1 amd64 [upgradable from: 2.36.3-0ubuntu0.20.04.1]
+gir1.2-webkit2-4.0/focal-updates,focal-security 2.36.4-0ubuntu0.20.04.1 amd64 [upgradable from: 2.36.3-0ubuntu0.20.04.1]
+git-man/focal-updates,focal-updates,focal-security,focal-security 1:2.25.1-1ubuntu3.5 all [upgradable from: 1:2.25.1-1ubuntu3.4]
+git/focal-updates,focal-security 1:2.25.1-1ubuntu3.5 amd64 [upgradable from: 1:2.25.1-1ubuntu3.4]
+gnupg-l10n/focal-updates,focal-updates,focal-security,focal-security 2.2.19-3ubuntu2.2 all [upgradable from: 2.2.19-3ubuntu2.1]
+gnupg-utils/focal-updates,focal-security 2.2.19-3ubuntu2.2 amd64 [upgradable from: 2.2.19-3ubuntu2.1]
+gnupg/focal-updates,focal-updates,focal-security,focal-security 2.2.19-3ubuntu2.2 all [upgradable from: 2.2.19-3ubuntu2.1]
+google-chrome-stable/stable 103.0.5060.134-1 amd64 [upgradable from: 102.0.5005.115-1]
+gpg-agent/focal-updates,focal-security 2.2.19-3ubuntu2.2 amd64 [upgradable from: 2.2.19-3ubuntu2.1]
+gpg-wks-client/focal-updates,focal-security 2.2.19-3ubuntu2.2 amd64 [upgradable from: 2.2.19-3ubuntu2.1]
+gpg-wks-server/focal-updates,focal-security 2.2.19-3ubuntu2.2 amd64 [upgradable from: 2.2.19-3ubuntu2.1]
+gpg/focal-updates,focal-security 2.2.19-3ubuntu2.2 amd64 [upgradable from: 2.2.19-3ubuntu2.1]
+gpgconf/focal-updates,focal-security 2.2.19-3ubuntu2.2 amd64 [upgradable from: 2.2.19-3ubuntu2.1]
+gpgsm/focal-updates,focal-security 2.2.19-3ubuntu2.2 amd64 [upgradable from: 2.2.19-3ubuntu2.1]
+gpgv/focal-updates,focal-security 2.2.19-3ubuntu2.2 amd64 [upgradable from: 2.2.19-3ubuntu2.1]
+intel-microcode/focal-updates,focal-security 3.20220510.0ubuntu0.20.04.1 amd64 [upgradable from: 3.20210608.0ubuntu0.20.04.1]
+isc-dhcp-client/focal-updates 4.4.1-2.1ubuntu5.20.04.3 amd64 [upgradable from: 4.4.1-2.1ubuntu5.20.04.2]
+isc-dhcp-common/focal-updates 4.4.1-2.1ubuntu5.20.04.3 amd64 [upgradable from: 4.4.1-2.1ubuntu5.20.04.2]
+libapt-pkg6.0/focal-updates 2.0.9 amd64 [upgradable from: 2.0.8]
+libcurl3-gnutls/focal-updates,focal-security 7.68.0-1ubuntu2.12 amd64 [upgradable from: 7.68.0-1ubuntu2.11]
+libcurl4/focal-updates,focal-security 7.68.0-1ubuntu2.12 amd64 [upgradable from: 7.68.0-1ubuntu2.11]
+libfreetype6/focal-updates,focal-security 2.10.1-2ubuntu0.2 amd64 [upgradable from: 2.10.1-2ubuntu0.1]
+libharfbuzz-icu0/focal-updates,focal-security 2.6.4-1ubuntu4.2 amd64 [upgradable from: 2.6.4-1ubuntu4]
+libharfbuzz0b/focal-updates,focal-security 2.6.4-1ubuntu4.2 amd64 [upgradable from: 2.6.4-1ubuntu4]
+libhttp-daemon-perl/focal-updates,focal-updates,focal-security,focal-security 6.06-1ubuntu0.1 all [upgradable from: 6.06-1]
+libjavascriptcoregtk-4.0-18/focal-updates,focal-security 2.36.4-0ubuntu0.20.04.1 amd64 [upgradable from: 2.36.3-0ubuntu0.20.04.1]
+libmbim-glib4/focal-updates 1.26.2-1~ubuntu20.04.1 amd64 [upgradable from: 1.24.8-1~20.04]
+libmbim-proxy/focal-updates 1.26.2-1~ubuntu20.04.1 amd64 [upgradable from: 1.24.8-1~20.04]
+libmm-glib0/focal-updates 1.18.6-1~ubuntu20.04.1 amd64 [upgradable from: 1.16.6-2~20.04.1]
+libnss3/focal-updates,focal-security 2:3.49.1-1ubuntu1.8 amd64 [upgradable from: 2:3.49.1-1ubuntu1.7]
+libpython3.8-dev/focal-updates,focal-security 3.8.10-0ubuntu1~20.04.5 amd64 [upgradable from: 3.8.10-0ubuntu1~20.04.4]
+libpython3.8-minimal/focal-updates,focal-security 3.8.10-0ubuntu1~20.04.5 amd64 [upgradable from: 3.8.10-0ubuntu1~20.04.4]
+libpython3.8-stdlib/focal-updates,focal-security 3.8.10-0ubuntu1~20.04.5 amd64 [upgradable from: 3.8.10-0ubuntu1~20.04.4]
+libpython3.8/focal-updates,focal-security 3.8.10-0ubuntu1~20.04.5 amd64 [upgradable from: 3.8.10-0ubuntu1~20.04.4]
+libqmi-glib5/focal-updates 1.30.4-1~ubuntu20.04.1 amd64 [upgradable from: 1.28.6-1~20.04.1]
+libqmi-proxy/focal-updates 1.30.4-1~ubuntu20.04.1 amd64 [upgradable from: 1.28.6-1~20.04.1]
+libssl1.1/focal-updates,focal-security 1.1.1f-1ubuntu2.16 amd64 [upgradable from: 1.1.1f-1ubuntu2.13]
+libwebkit2gtk-4.0-37/focal-updates,focal-security 2.36.4-0ubuntu0.20.04.1 amd64 [upgradable from: 2.36.3-0ubuntu0.20.04.1]
+linux-firmware/focal-updates,focal-updates 1.187.32 all [upgradable from: 1.187.31]
+linux-generic-hwe-20.04/focal-updates,focal-security 5.15.0.41.44~20.04.13 amd64 [upgradable from: 5.13.0.51.58~20.04.31]
+linux-headers-generic-hwe-20.04/focal-updates,focal-security 5.15.0.41.44~20.04.13 amd64 [upgradable from: 5.13.0.51.58~20.04.31]
+linux-image-generic-hwe-20.04/focal-updates,focal-security 5.15.0.41.44~20.04.13 amd64 [upgradable from: 5.13.0.51.58~20.04.31]
+linux-libc-dev/focal-updates,focal-security 5.4.0-122.138 amd64 [upgradable from: 5.4.0-120.136]
+modemmanager/focal-updates 1.18.6-1~ubuntu20.04.1 amd64 [upgradable from: 1.16.6-2~20.04.1]
+openssl/focal-updates,focal-security 1.1.1f-1ubuntu2.16 amd64 [upgradable from: 1.1.1f-1ubuntu2.15]
+python3-jwt/focal-updates,focal-updates,focal-security,focal-security 1.7.1-2ubuntu2.1 all [upgradable from: 1.7.1-2ubuntu2]
+python3.8-dev/focal-updates,focal-security 3.8.10-0ubuntu1~20.04.5 amd64 [upgradable from: 3.8.10-0ubuntu1~20.04.4]
+python3.8-minimal/focal-updates,focal-security 3.8.10-0ubuntu1~20.04.5 amd64 [upgradable from: 3.8.10-0ubuntu1~20.04.4]
+python3.8/focal-updates,focal-security 3.8.10-0ubuntu1~20.04.5 amd64 [upgradable from: 3.8.10-0ubuntu1~20.04.4]
+snapd/focal-updates 2.55.5+20.04 amd64 [upgradable from: 2.54.3+20.04.1ubuntu0.3]
+teamviewer/preview 15.33.1 amd64 [upgradable from: 15.31.3]
+thunderbird-gnome-support/focal-updates,focal-security 1:91.11.0+build2-0ubuntu0.20.04.1 amd64 [upgradable from: 1:91.9.1+build1-0ubuntu0.20.04.1]
+thunderbird-locale-en-us/focal-updates,focal-updates,focal-security,focal-security 1:91.11.0+build2-0ubuntu0.20.04.1 all [upgradable from: 1:91.9.1+build1-0ubuntu0.20.04.1]
+thunderbird-locale-en/focal-updates,focal-security 1:91.11.0+build2-0ubuntu0.20.04.1 amd64 [upgradable from: 1:91.9.1+build1-0ubuntu0.20.04.1]
+thunderbird/focal-updates,focal-security 1:91.11.0+build2-0ubuntu0.20.04.1 amd64 [upgradable from: 1:91.9.1+build1-0ubuntu0.20.04.1]
+ubuntu-advantage-tools/focal-updates 27.9~20.04.1 amd64 [upgradable from: 27.8~20.04.1]
+unattended-upgrades/focal-updates,focal-updates 2.3ubuntu0.3 all [upgradable from: 2.3ubuntu0.1]
+update-notifier-common/focal-updates,focal-updates 3.192.30.11 all [upgradable from: 3.192.30.10]
+update-notifier/focal-updates 3.192.30.11 amd64 [upgradable from: 3.192.30.10]
+xserver-common/focal-updates,focal-updates,focal-security,focal-security 2:1.20.13-1ubuntu1~20.04.3 all [upgradable from: 2:1.20.13-1ubuntu1~20.04.2]
+xserver-xephyr/focal-updates,focal-security 2:1.20.13-1ubuntu1~20.04.3 amd64 [upgradable from: 2:1.20.13-1ubuntu1~20.04.2]
+xserver-xorg-core/focal-updates,focal-security 2:1.20.13-1ubuntu1~20.04.3 amd64 [upgradable from: 2:1.20.13-1ubuntu1~20.04.2]
+xserver-xorg-legacy/focal-updates,focal-security 2:1.20.13-1ubuntu1~20.04.3 amd64 [upgradable from: 2:1.20.13-1ubuntu1~20.04.2]
+xwayland/focal-updates,focal-security 2:1.20.13-1ubuntu1~20.04.3 amd64 [upgradable from: 2:1.20.13-1ubuntu1~20.04.2]
