@@ -9,7 +9,9 @@ from pathlib import Path
 from datetime import date
 import time
 
-linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/MariaDB/linecount.txt"
+script_dir = os.path.dirname(__file__)
+linecountpath_rel = "linecount.txt"
+linecountpath = os.path.join(script_dir, rel_path)
 # Connect to MariaDB Platform
 try:
     conn = mariadb.connect(
@@ -134,7 +136,7 @@ if not my_file.is_file():
 from_line = 0
 with open(linecountpath, "r") as f :
     from_line = int(f.readline())
-filepath1 = '/home/ihsanfr/Kode_TA_Ihsan/ejbca1.log'
+filepath1 = 'Kode_TA_Ihsan/ejbca1.log'
 
 if isfile(filepath1):
     linecount(filepath1)
