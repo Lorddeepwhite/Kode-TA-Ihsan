@@ -12,7 +12,7 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 # Fetch the service account key JSON file contents
-cred = credentials.Certificate('/home/ihsanfr/Kode_TA_Ihsan/Firebase/ta-ihsan-firebase-adminsdk-dqlgz-233439b4b0.json')
+cred = credentials.Certificate('ta-ihsan-firebase-adminsdk-dqlgz-233439b4b0.json')
 # Initialize the app with a service account, granting admin privileges
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://ta-ihsan-default-rtdb.firebaseio.com/'
@@ -124,7 +124,9 @@ def linecount(filename):
             lc.write(str(i))
 
 
-linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/Firebase/linecount.txt"
+script_dir = os.path.dirname(__file__)
+linecountpath_rel = "linecount.txt"
+linecountpath = os.path.join(script_dir, rel_path)
 my_file = Path(linecountpath)
 if not my_file.is_file():
     with open (linecountpath, "w") as lc:
@@ -133,7 +135,7 @@ if not my_file.is_file():
 from_line = 0
 with open(linecountpath, "r") as f :
     from_line = int(f.readline())
-filepath1 = '/home/ihsanfr/Kode_TA_Ihsan/ejbca1.log'
+filepath1 = '/Kode_TA_Ihsan/ejbca1.log'
 
 
 if isfile(filepath1):
