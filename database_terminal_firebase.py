@@ -12,7 +12,7 @@ import time
 
 script_dir = os.path.dirname(__file__)
 linecountpath_rel = "linecountterminal_firebase.txt"
-linecountpath = os.path.join(script_dir, rel_path)
+linecountpath = os.path.join(script_dir, linecountpath_rel)
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
