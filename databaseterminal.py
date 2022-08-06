@@ -11,7 +11,7 @@ import time
 
 script_dir = os.path.dirname(__file__)
 linecountpath_rel = "linecountterminal.txt"
-linecountpath = os.path.join(script_dir, rel_path)
+linecountpath = os.path.join(script_dir, linecountpath_rel)
 # Connect to MariaDB Platform
 try:
     conn = mariadb.connect(
