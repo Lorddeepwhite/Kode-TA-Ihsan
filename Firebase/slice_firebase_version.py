@@ -126,7 +126,7 @@ def linecount(filename):
 
 script_dir = os.path.dirname(__file__)
 linecountpath_rel = "linecount.txt"
-linecountpath = os.path.join(script_dir, rel_path)
+linecountpath = os.path.join(script_dir, linecountpath_rel)
 my_file = Path(linecountpath)
 if not my_file.is_file():
     with open (linecountpath, "w") as lc:
