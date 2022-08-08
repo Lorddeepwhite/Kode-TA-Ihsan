@@ -135,7 +135,7 @@ if not my_file.is_file():
 from_line = 0
 with open(linecountpath, "r") as f :
     from_line = int(f.readline())
-filepath1 = '/Kode_TA_Ihsan/ejbca1.log'
+filepath1 = 'ejbca1.log'
 
 
 if isfile(filepath1):
