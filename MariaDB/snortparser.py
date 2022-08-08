@@ -125,9 +125,9 @@ if not my_file.is_file():
 from_line = 0
 with open(linecountpath, "r") as f :
     from_line = int(f.readline())
-if isfile("/Kode_TA_Ihsan/alert1.txt"):
-    linecount("/Kode_TA_Ihsan/alert1.txt")
-    snort_parse("/Kode_TA_Ihsan/alert1.txt", from_line)
+if isfile("alert1.txt"):
+    linecount("/alert1.txt")
+    snort_parse("alert1.txt", from_line)
 else:
     print("A09:2021 - Secure Logging and Monitoring Failures")
 conn.close()
