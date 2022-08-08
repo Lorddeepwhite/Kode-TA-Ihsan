@@ -17,7 +17,7 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 # Fetch the service account key JSON file contents
-cred = credentials.Certificate('/Kode_TA_Ihsan/Firebase/ta-ihsan-firebase-adminsdk-dqlgz-233439b4b0.json')
+cred = credentials.Certificate('Firebase/ta-ihsan-firebase-adminsdk-dqlgz-233439b4b0.json')
 # Initialize the app with a service account, granting admin privileges
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://ta-ihsan-default-rtdb.firebaseio.com/'
