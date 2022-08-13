@@ -328,13 +328,13 @@ def main_mariadb():
         from_line2 = int(f.readline())
     if isfile('ejbca1.log'):
         linecount('ejbca1.log')
-        parsing_snort('ejbca1.log', from_line2, conn)
+        parsing_ejbca('ejbca1.log', from_line2, conn)
     else:
         print("A09:2021 - Secure Logging and Monitoring Failures")
     conn.close()
 
 def main_firebase():
-    conn = connect_mariadb
+    conn = connect_firebase
     linecountpath1 = "Firebase/snortlinecount.txt"
     linecountpath2 = "Firebase/linecount.txt"
     my_file1 = Path(linecountpath1)
@@ -352,6 +352,15 @@ def main_firebase():
     if isfile("alert1.txt"):
         linecount("alert1.txt")
         parsing_snort("alert1.txt", from_line1, conn)
+    else:
+        print("A09:2021 - Secure Logging and Monitoring Failures")
+        
+    from_line2 = 0
+    with open(linecountpath2, "r") as f :
+        from_line2 = int(f.readline())
+    if isfile('ejbca1.log'):
+        linecount('ejbca1.log')
+        parsing_ejbca('ejbca1.log', from_line2, conn)
     else:
         print("A09:2021 - Secure Logging and Monitoring Failures")
 
