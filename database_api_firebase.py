@@ -16,7 +16,7 @@ from firebase_admin import credentials
 from firebase_admin import db
 # Connect to MariaDB Platform
 def connect_firebase():
-    cred = credentials.Certificate('/home/ihsanfr/Kode_TA_Ihsan/Firebase/ta-ihsan-firebase-adminsdk-dqlgz-233439b4b0.json')
+    cred = credentials.Certificate('Firebase/ta-ihsan-firebase-adminsdk-dqlgz-233439b4b0.json')
     # Initialize the app with a service account, granting admin privileges
     firebase_admin.initialize_app(cred, {
         'databaseURL': 'https://ta-ihsan-default-rtdb.firebaseio.com/'
@@ -227,7 +227,7 @@ def linecount(filename, linecountpath):
             lc.write(str(i))
 
 def main_ejbca():
-    linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/Firebase/linecount.txt"
+    linecountpath = "Firebase/linecount.txt"
     my_file = Path(linecountpath)
     if not my_file.is_file():
         with open (linecountpath, "w") as lc:
@@ -246,7 +246,7 @@ def main_ejbca():
         print("A09:2021 - Secure Logging and Monitoring Failures")
 
 def main_snort():
-    linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/Firebase/snortlinecount.txt"
+    linecountpath = "Firebase/snortlinecount.txt"
     my_file = Path(linecountpath)
     if not my_file.is_file():
         with open (linecountpath, "w") as lc:
@@ -255,14 +255,14 @@ def main_snort():
     from_line = 0
     with open(linecountpath, "r") as f :
         from_line = int(f.readline())
-    if isfile("/home/ihsanfr/Kode_TA_Ihsan/alert1.txt"):
-        linecount("/home/ihsanfr/Kode_TA_Ihsan/alert1.txt")
-        parsing_snort("/home/ihsanfr/Kode_TA_Ihsan/alert1.txt", from_line)
+    if isfile("alert1.txt"):
+        linecount("alert1.txt")
+        parsing_snort("alert1.txt", from_line)
     else:
         print("A09:2021 - Secure Logging and Monitoring Failures")
 
 def main_terminal():
-    linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/linecountterminal_firebase.txt"
+    linecountpath = "linecountterminal_firebase.txt"
     my_file = Path(linecountpath)
     if not my_file.is_file():
         with open (linecountpath, "w") as lc:
@@ -271,7 +271,7 @@ def main_terminal():
     from_line = 0
     with open(linecountpath, "r") as f :
         from_line = int(f.readline())
-    filepath1 = '/home/ihsanfr/Kode_TA_Ihsan/tes.log'
+    filepath1 = 'tes.log'
 
     if isfile(filepath1):
         linecount(filepath1)
