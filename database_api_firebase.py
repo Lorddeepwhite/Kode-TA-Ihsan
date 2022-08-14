@@ -16,11 +16,12 @@ from firebase_admin import credentials
 from firebase_admin import db
 # Connect to MariaDB Platform
 def connect_firebase():
-    cred = credentials.Certificate('Firebase/ta-ihsan-firebase-adminsdk-dqlgz-233439b4b0.json')
-    # Initialize the app with a service account, granting admin privileges
-    firebase_admin.initialize_app(cred, {
-        'databaseURL': 'https://ta-ihsan-default-rtdb.firebaseio.com/'
-    })
+    if not firebase_admin._apps:
+        cred = credentials.Certificate('Firebase/ta-ihsan-firebase-adminsdk-dqlgz-233439b4b0.json')
+        # Initialize the app with a service account, granting admin privileges
+        firebase_admin.initialize_app(cred, {
+            'databaseURL': 'https://ta-ihsan-default-rtdb.firebaseio.com/'
+        })
 
 def add_data_firebase_terminal(Tanggal, IsiLog):
     connect_firebase()
@@ -240,7 +241,7 @@ def main_ejbca():
 
 
     if isfile(filepath1):
-        linecount(filepath1)
+        linecount(filepath1,linecountpath)
         parsing_ejbca(filepath1, from_line)
     else:
         print("A09:2021 - Secure Logging and Monitoring Failures")
@@ -256,7 +257,7 @@ def main_snort():
     with open(linecountpath, "r") as f :
         from_line = int(f.readline())
     if isfile("alert1.txt"):
-        linecount("alert1.txt")
+        linecount("alert1.txt", linecountpath)
         parsing_snort("alert1.txt", from_line)
     else:
         print("A09:2021 - Secure Logging and Monitoring Failures")
@@ -274,7 +275,7 @@ def main_terminal():
     filepath1 = 'tes.log'
 
     if isfile(filepath1):
-        linecount(filepath1)
+        linecount(filepath1, linecountpath)
         parsing_terminal(filepath1, from_line)
     else:
         print("A09:2021 - Secure Logging and Monitoring Failures")
