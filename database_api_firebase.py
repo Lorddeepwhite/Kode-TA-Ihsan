@@ -17,7 +17,7 @@ from firebase_admin import db
 # Connect to MariaDB Platform
 def connect_firebase():
     if not firebase_admin._apps:
-        cred = credentials.Certificate('Firebase/ta-ihsan-firebase-adminsdk-dqlgz-233439b4b0.json')
+        cred = credentials.Certificate('/home/ihsanfr/Kode_TA_Ihsan/Firebase/ta-ihsan-firebase-adminsdk-dqlgz-233439b4b0.json')
         # Initialize the app with a service account, granting admin privileges
         firebase_admin.initialize_app(cred, {
             'databaseURL': 'https://ta-ihsan-default-rtdb.firebaseio.com/'
@@ -129,25 +129,29 @@ def parsing_ejbca(filepath, baris_awal) :
                 ErrorDB = "Command Injection"
             else:
                 ErrorDB = "Not Error"
-            print((tanggal, timestamp, level, event_name, server_port, Deskripsi, ErrorDB))
-            add_data_firebase_ejbca(tanggal, timestamp, level, event_name, server_port, Deskripsi, ErrorDB)
+            if ErrorDB != "Not Error":
+                print((tanggal, timestamp, level, event_name, server_port, Deskripsi, ErrorDB))
+                add_data_firebase_ejbca(tanggal, timestamp, level, event_name, server_port, Deskripsi, ErrorDB)
 
 def parsing_terminal(filepath, baris_awal) :
     data = []
+    integer = pyp.Word(pyp.nums)
+    string = pyp.Word(pyp.alphas)
+    desk = pyp.Combine(pyp.Suppress("* TLS") + pyp.Regex("[^]]*"))
     n_line = 0
-    with open(filepath, 'r') as fin:
-        n_line = len(fin.readlines())
+    with open(filepath, 'r') as snort_logfile:
+        n_line = len(snort_logfile.readlines())
         print(n_line)
-    with open(filepath, 'r') as fin:
-        for line in islice(fin, baris_awal, None):
-            start = 0
-            end = start
-            while end < len(line):
-                end += 1
-            Deskripsi = line[start:end]
-            tanggal = date.today()
-            print(tanggal, Deskripsi)
-            add_data_firebase_terminal(tanggal, Deskripsi)
+    with open(filepath, 'r') as snort_logfile:
+        for grp in islice(snort_logfile, baris_awal, None):
+            for has_content, grp in itertools.groupby(snort_logfile, key = lambda x: bool(x.strip())):
+                if has_content:
+                    tmpStr = ''.join(grp)
+                    tanggal = date.today()
+                    des = desk.searchString(tmpStr)
+                    strippeddes = str(des).replace("[['", "").replace("']]", "")
+                    print(tanggal, strippeddes)
+                    add_data_firebase_terminal(tanggal, strippeddes)
 
 def parsing_snort(logfile, baris_awal):
     integer = pyp.Word(pyp.nums)
@@ -228,7 +232,7 @@ def linecount(filename, linecountpath):
             lc.write(str(i))
 
 def main_ejbca():
-    linecountpath = "Firebase/linecount.txt"
+    linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/Firebase/linecount.txt"
     my_file = Path(linecountpath)
     if not my_file.is_file():
         with open (linecountpath, "w") as lc:
@@ -241,13 +245,13 @@ def main_ejbca():
 
 
     if isfile(filepath1):
-        linecount(filepath1,linecountpath)
+        linecount(filepath1, linecountpath)
         parsing_ejbca(filepath1, from_line)
     else:
         print("A09:2021 - Secure Logging and Monitoring Failures")
 
 def main_snort():
-    linecountpath = "Firebase/snortlinecount.txt"
+    linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/Firebase/snortlinecount.txt"
     my_file = Path(linecountpath)
     if not my_file.is_file():
         with open (linecountpath, "w") as lc:
@@ -256,14 +260,14 @@ def main_snort():
     from_line = 0
     with open(linecountpath, "r") as f :
         from_line = int(f.readline())
-    if isfile("alert1.txt"):
-        linecount("alert1.txt", linecountpath)
-        parsing_snort("alert1.txt", from_line)
+    if isfile("/home/ihsanfr/Kode_TA_Ihsan/alert1.txt"):
+        linecount("/home/ihsanfr/Kode_TA_Ihsan/alert1.txt", linecountpath)
+        parsing_snort("/home/ihsanfr/Kode_TA_Ihsan/alert1.txt", from_line)
     else:
         print("A09:2021 - Secure Logging and Monitoring Failures")
 
 def main_terminal():
-    linecountpath = "linecountterminal_firebase.txt"
+    linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/linecountterminal_firebase.txt"
     my_file = Path(linecountpath)
     if not my_file.is_file():
         with open (linecountpath, "w") as lc:
@@ -272,7 +276,7 @@ def main_terminal():
     from_line = 0
     with open(linecountpath, "r") as f :
         from_line = int(f.readline())
-    filepath1 = 'tes.log'
+    filepath1 = '/home/ihsanfr/Kode_TA_Ihsan/tes.log'
 
     if isfile(filepath1):
         linecount(filepath1, linecountpath)
