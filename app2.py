@@ -24,22 +24,30 @@ app = Flask(__name__, static_folder="data")
 @app.route("/terminal")
 def terminal():
 	data = database_api_firebase.main_terminal()
-	return render_template("index_out.html", my_list=data)
+	return render_template("index1.html", my_list=data)
 
 @app.route("/snort")
 def snort():
 	data = database_api_firebase.main_snort()
-	return render_template("index_out.html", my_list=data)
+	return render_template("index1.html", my_list=data)
 
 @app.route("/ejbca")
 def ejbca():
 	data = database_api_firebase.main_ejbca()
-	return render_template("index_out.html", my_list=data)
+	return render_template("index1.html", my_list=data)
 
 @app.route("/tes")
 def tes():
 	example_embed='This string is from python'
 	return render_template('index1.html', embed=example_embed)
+
+@app.route("/main")
+def main():
+	data1 = database_api_firebase.main_terminal()
+	data2 = database_api_firebase.main_snort()
+	data = database_api_firebase.main_ejbca()
+	return render_template("index1.html", my_list=(data1, data2, data))
+
 
 if __name__ == "__main__":
 	app.jinja_env.auto_reload = True
