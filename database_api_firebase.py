@@ -1,12 +1,13 @@
 # Module Imports
 from genericpath import isfile
+from socketserver import DatagramRequestHandler
 import mariadb
 import sys
 import mysql.connector as database
 from itertools import islice
 import os
 from pathlib import Path
-from datetime import date
+from datetime import date, datetime
 import time
 from xml.etree.ElementTree import tostring
 import pyparsing as pyp
@@ -59,6 +60,30 @@ def add_data_firebase_snort(SID, Pesan_Alert, Prioritas, Timestamp, Port, IP_Add
         "IP" : IP,
         "Paket_Input_Output" : Paket_Input_Output,
         "Exploit" : Exploit
+    }
+    ref.push().set(value)
+
+def add_data_serverlog(Tanggal, Timestamp, Log_Level, Event_Module, Server_Service_Thread_Port, Deskripsi_EventPaket_Input_Output, Komponen):
+    connect_firebase()
+    ref = db.reference('Server_log')
+    value = {
+        "Tanggal": str(Tanggal),
+        "Timestamp":str(Timestamp), 
+        "Log_Level":str(Log_Level), 
+        "Event_Module":str(Event_Module),
+        "Server_Service_Thread_Port":str(Server_Service_Thread_Port),
+        "Deskripsi_EventPaket_Input_Output":str(Deskripsi_EventPaket_Input_Output),
+        "Komponen":str(Komponen)
+    }    
+    ref.push().set(value)
+
+def add_data_log_failure(Date, line_error, path):
+    connect_firebase()
+    ref = db.reference('monitoring_failure_log')
+    value = {
+        "Tanggal" : str(Date),
+        "Pesan_Kesalahan" : str(line_error),
+        "Filepath" : str(path)
     }
     ref.push().set(value)
 
@@ -120,13 +145,15 @@ def parsing_ejbca(filepath, baris_awal) :
             #untuk kolom tanggal
             tanggal = date.today()
             if "decode fails" in Deskripsi:
-                ErrorDB = "Upload Ejbca"
+                ErrorDB = "Upload Error (Broken Access Control)"
             elif "Invalid DN" and "':" in Deskripsi:
-                ErrorDB = "SQL Injection"
+                ErrorDB = "SQL Injection (Injection)"
             elif "<script>" in Deskripsi:
-                ErrorDB = "XSS"
+                ErrorDB = "XSS (Injection/SSRF)"
             elif "Some chars stripped." in Deskripsi and "<script>" not in Deskripsi:
-                ErrorDB = "Command Injection"
+                ErrorDB = "Command Injection (Injection)"
+            elif "brute force" in Deskripsi:
+                        ErrorDB ="Brute Force Attempt (Security Misconfiguration)"
             else:
                 ErrorDB = "Not Error"
             if ErrorDB != "Not Error":
@@ -134,26 +161,21 @@ def parsing_ejbca(filepath, baris_awal) :
                 add_data_firebase_ejbca(tanggal, timestamp, level, event_name, server_port, Deskripsi, ErrorDB)
 
 def parsing_terminal(filepath, baris_awal) :
-    data = []
-    integer = pyp.Word(pyp.nums)
-    string = pyp.Word(pyp.alphas)
-    desk = pyp.Combine(pyp.Suppress("* TLS") + pyp.Regex("[^]]*"))
+    tanggal = datetime.today()
     n_line = 0
     with open(filepath, 'r') as snort_logfile:
         n_line = len(snort_logfile.readlines())
         print(n_line)
-    with open(filepath, 'r') as snort_logfile:
-        for grp in islice(snort_logfile, baris_awal, None):
-            for has_content, grp in itertools.groupby(snort_logfile, key = lambda x: bool(x.strip())):
-                if has_content:
-                    tmpStr = ''.join(grp)
-                    tanggal = date.today()
-                    des = desk.searchString(tmpStr)
-                    strippeddes = str(des).replace("[['", "").replace("']]", "")
-                    print(tanggal, strippeddes)
-                    add_data_firebase_terminal(tanggal, strippeddes)
+    with open(filepath, 'r') as fin:
+        for line in islice(fin, baris_awal, None):
+            if "TLS" in line:
+                print(tanggal, line)
+                add_data_firebase_terminal(tanggal,line)
+            elif "apache2" in line:
+                print(tanggal, line)
+                add_data_firebase_terminal(tanggal,line)
 
-def parsing_snort(logfile, baris_awal):
+def parsing_snort(filepath, baris_awal):
     integer = pyp.Word(pyp.nums)
     string = pyp.Word(pyp.alphas)
     ip_addr = pyp.Combine(integer+'.'+integer+'.'+integer+'.'+integer)
@@ -175,10 +197,10 @@ def parsing_snort(logfile, baris_awal):
     
 
     n_line = 0
-    with open(logfile, 'r') as snort_logfile:
+    with open(filepath, 'r') as snort_logfile:
         n_line = len(snort_logfile.readlines())
         print(n_line)
-    with open(logfile, 'r') as snort_logfile:
+    with open(filepath, 'r') as snort_logfile:
         for grp in islice(snort_logfile, baris_awal, None):
             for has_content, grp in itertools.groupby(snort_logfile, key = lambda x: bool(x.strip())):
                 if has_content:
@@ -200,18 +222,89 @@ def parsing_snort(logfile, baris_awal):
                     strippedip = str(ips).replace("[['", "").replace("']]", "")
                     strippeddeskripsi = str(deskripsi).replace("[['", "").replace("']]", "")
                     #Kolom exploit
-                    if "decode fails" in strippeddeskripsi:
-                        ErrorDB = "Upload Ejbca"
-                    elif "Invalid DN" and "':" in strippeddeskripsi:
-                        ErrorDB = "SQL Injection"
-                    elif "<script>" in strippeddeskripsi:
-                        ErrorDB = "XSS"
-                    elif "Some chars stripped." in strippeddeskripsi and "<script>" not in strippeddeskripsi:
-                        ErrorDB = "Command Injection"
-                    else:
+                    if "decode fails" in strippedkelas:
+                        ErrorDB = "Upload Error (Broken Access Control)"
+                    elif "Invalid DN" and "':" in strippedkelas:
+                        ErrorDB = "SQL Injection (Injection)"
+                    elif "<script>" in strippedkelas:
+                        ErrorDB = "XSS (Injection/SSRF)"
+                    elif "Some chars stripped." in strippedkelas and "<script>" not in strippedkelas:
+                        ErrorDB = "Command Injection (Injection)"
+                    elif "brute force" in strippedkelas:
+                        ErrorDB ="Brute Force Attempt (Security Misconfiguration)"
+                    else: 
                         ErrorDB = "Non Exploit"
-                    print(strippedid, strippedkelas, strippedprior, strippedtgl, strippedplbhn, strippedjaringan, strippedip, strippeddeskripsi, ErrorDB)
-                    add_data_firebase_snort(strippedid, strippedkelas, strippedprior, strippedtgl, strippedplbhn, strippedjaringan, strippedip, strippeddeskripsi, ErrorDB)
+                    if ErrorDB != "Not Error":
+                        print(strippedid, strippedkelas, strippedprior, strippedtgl, strippedplbhn, strippedjaringan, strippedip, strippeddeskripsi, ErrorDB)
+                        add_data_firebase_snort(strippedid, strippedkelas, strippedprior, strippedtgl, strippedplbhn, strippedjaringan, strippedip, strippeddeskripsi, ErrorDB)
+
+def parsing_server(filepath, baris_awal) :
+    data = []
+    n_line = 0
+    with open(filepath, 'r') as fin:
+        n_line = len(fin.readlines())
+        print(n_line)
+    with open(filepath, 'r') as fin:
+        for line in islice(fin, baris_awal, None):
+            start = 0
+            end = start
+            #untuk kolom timestamp
+            while line[end] != " " :
+                end += 1
+                
+            tanggal = line[start:end]
+
+            start = end
+            while line[start] == " " :
+                start += 1
+                
+            end = start
+            while line[end] != " " :
+                end += 1
+            timestamp = line[start:end]
+
+            start = end
+            while line[start] == " " :
+                start += 1
+                
+            end = start
+            while line[end] != " " :
+                end += 1
+            level = line[start:end]
+
+            #untuk kolom event module
+            start = end
+            while line[start] == " " :
+                start += 1
+                
+            end = start
+            while line[end] != "]" :
+                end += 1
+            event_name = line[start+1:end]
+
+            #untuk kolom server port
+            start = end
+            while line[start] == "(" :
+                start += 1
+                
+            end = start
+            while line[end] != ")" :
+                end += 1
+            server_port = line[start+3:end]
+
+            #untuk kolom deskripsi
+            start = end
+            while line[start] == " " :
+                start += 1
+            end = start
+            while end < len(line):
+                end += 1
+            Deskripsi = line[start+2:end]
+
+            runtime = "runtime-name: "
+            module = Deskripsi[Deskripsi.index(runtime) + len(runtime):]
+            print((tanggal, timestamp, level, event_name, server_port, Deskripsi, module))
+            add_data_serverlog(tanggal, timestamp, level, event_name, server_port, Deskripsi, module)
 
 def length_file(filename):
     with open(filename) as f:
@@ -234,6 +327,7 @@ def linecount(filename, linecountpath):
 def main_ejbca():
     linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/Firebase/linecount.txt"
     my_file = Path(linecountpath)
+    errorline = "A09:2021 - Secure Logging and Monitoring Failures"
     if not my_file.is_file():
         with open (linecountpath, "w") as lc:
             lc.write("0")
@@ -243,36 +337,60 @@ def main_ejbca():
         from_line = int(f.readline())
     filepath1 = '/home/ihsanfr/Kode_TA_Ihsan/ejbca1.log'
 
-
+    tanggal = date.today()
     if isfile(filepath1):
         linecount(filepath1, linecountpath)
         parsing_ejbca(filepath1, from_line)
     else:
-        print("A09:2021 - Secure Logging and Monitoring Failures")
+        print(errorline)
+        add_data_log_failure(tanggal, errorline, filepath1)
 
 def main_snort():
     linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/Firebase/snortlinecount.txt"
     my_file = Path(linecountpath)
+    errorline = "A09:2021 - Secure Logging and Monitoring Failures"
     if not my_file.is_file():
         with open (linecountpath, "w") as lc:
             lc.write("0")
-
+    tanggal = date.today()
     from_line = 0
+    filepath1 = "/home/ihsanfr/Kode_TA_Ihsan/alert1.txt"
     with open(linecountpath, "r") as f :
         from_line = int(f.readline())
-    if isfile("/home/ihsanfr/Kode_TA_Ihsan/alert1.txt"):
-        linecount("/home/ihsanfr/Kode_TA_Ihsan/alert1.txt", linecountpath)
-        parsing_snort("/home/ihsanfr/Kode_TA_Ihsan/alert1.txt", from_line)
+    if isfile(filepath1):
+        linecount(filepath1, linecountpath)
+        parsing_snort(filepath1, from_line)
     else:
-        print("A09:2021 - Secure Logging and Monitoring Failures")
+        print(errorline)
+        add_data_log_failure(tanggal, errorline, filepath1)
+
+def main_server():
+    linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/serverlinecount.txt"
+    my_file = Path(linecountpath)
+    errorline = "A09:2021 - Secure Logging and Monitoring Failures"
+    if not my_file.is_file():
+        with open (linecountpath, "w") as lc:
+            lc.write("0")
+    tanggal = date.today()
+    from_line = 0
+    filepath1 = "/home/ihsanfr/Kode_TA_Ihsan/server.log"
+    with open(linecountpath, "r") as f :
+        from_line = int(f.readline())
+    if isfile(filepath1):
+        linecount(filepath1, linecountpath)
+        parsing_server(filepath1, from_line)
+    else:
+        print(errorline)
+        add_data_log_failure(tanggal, errorline, filepath1)
 
 def main_terminal():
     linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/linecountterminal_firebase.txt"
     my_file = Path(linecountpath)
+    errorline = "A09:2021 - Secure Logging and Monitoring Failures"
     if not my_file.is_file():
         with open (linecountpath, "w") as lc:
             lc.write("0")
-
+    tanggal = date.today()
     from_line = 0
     with open(linecountpath, "r") as f :
         from_line = int(f.readline())
@@ -282,4 +400,5 @@ def main_terminal():
         linecount(filepath1, linecountpath)
         parsing_terminal(filepath1, from_line)
     else:
-        print("A09:2021 - Secure Logging and Monitoring Failures")
+        print(errorline)
+        add_data_log_failure(tanggal, errorline, filepath1)
