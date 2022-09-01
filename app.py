@@ -41,15 +41,22 @@ def tes():
 	example_embed='This string is from python'
 	return render_template('index1.html', embed=example_embed)
 
+@app.route("/server")
+def server(): 
+	data = database_api_firebase.main_server()
+	return render_template('index1.html', my_list=data)
+
 @app.route("/main")
 def main():
 	data1 = database_api_firebase.main_terminal()
 	data2 = database_api_firebase.main_snort()
 	data = database_api_firebase.main_ejbca()
-	return render_template("index1.html", my_list=(data1, data2, data))
+	data3 = database_api_firebase.main_server()
+	return render_template("index1.html", my_list=(data1, data2, data, data3))
 
 
 if __name__ == "__main__":
 	app.jinja_env.auto_reload = True
 	app.config['TEMPLATES_AUTO_RELOAD'] = True
 	app.run(debug = True, host='0.0.0.0',port=5000)
+
