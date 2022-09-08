@@ -1,0 +1,26 @@
+# $Id: local.rules,v 1.11 2004/07/23 20:15:44 bmc Exp $
+# ----------------
+# LOCAL RULES
+# ----------------
+# This file intentionally does not come with signatures.  Put your local
+# additions here.
+alert tcp any any -> $HOME_NET any (msg: "Error Based SQL Injection Detected"; content: "%27" ; sid:100000011; )
+
+alert tcp any any -> $HOME_NET any (msg: "Error Based SQL Injection Detected"; content: "22" ; sid:100000012; )
+
+alert tcp any any -> $HOME_NET any (msg: "AND SQL Injection Detected"; content: "and" ; sid:100000060; )
+
+alert tcp any any -> $HOME_NET any (msg: "OR SQL Injection Detected"; content: " or " ; sid:100000061; )
+
+alert tcp any any -> $HOME_NET any (msg: "Form Based SQL Injection Detected"; content: "%27" ; sid:1000003; )
+
+alert tcp any any -> $HOME_NET any (msg: "Order by SQL Injection"; content: "order" ; sid:1000005; )
+
+alert tcp any any -> $HOME_NET any (msg: "XSS Detected"; content: "script" ; sid:1000004; )
+
+alert tcp any any -> $HOME_NET any (msg: "UNION SELECT SQL Injection"; content: "union" ; sid:1000006; )
+
+alert tcp any any -> $HOME_NET any (msg:"Brute Force Detected"; flow:from_server,established; detection_filter:track by_dst, count 5, seconds 60; metadata: service smtp; classtype:suspicious-login; sid:2278; rev:2;)
+
+alert tcp any any -> $HOME_NET any (msg: "Faras detected"; content: "faras" ; sid:10000013; )
+
