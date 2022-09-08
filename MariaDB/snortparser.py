@@ -114,7 +114,9 @@ def linecount(filename):
             lc.seek(0)
             lc.write(str(i))
 
-linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/MariaDB/snortlinecount.txt"
+script_dir = os.path.dirname(__file__)
+linecountpath_rel = "snortlinecount.txt"
+linecountpath = os.path.join(script_dir, linecountpath_rel)
 my_file = Path(linecountpath)
 if not my_file.is_file():
     with open (linecountpath, "w") as lc:
@@ -123,9 +125,9 @@ if not my_file.is_file():
 from_line = 0
 with open(linecountpath, "r") as f :
     from_line = int(f.readline())
-if isfile("/home/ihsanfr/Kode_TA_Ihsan/alert1.txt"):
-    linecount("/home/ihsanfr/Kode_TA_Ihsan/alert1.txt")
-    snort_parse("/home/ihsanfr/Kode_TA_Ihsan/alert1.txt", from_line)
+if isfile("alert1.txt"):
+    linecount("/alert1.txt")
+    snort_parse("alert1.txt", from_line)
 else:
     print("A09:2021 - Secure Logging and Monitoring Failures")
 conn.close()
