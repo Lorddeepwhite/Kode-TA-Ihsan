@@ -87,8 +87,26 @@ def add_data_log_failure(Date, line_error, path):
     }
     ref.push().set(value)
 
+def add_data_non_exploit(Jumlah):
+    connect_firebase()
+    ref = db.reference('non_exploit')
+    value = {
+        "Jumlah Data" : str(Jumlah)
+    }
+    ref.push().set(value)
+
+def add_data_total_deteksi(Banyak):
+    connect_firebase()
+    ref = db.reference('total_detection')
+    value = {
+        "Jumlah Data" : str(Banyak)
+    }
+    ref.push().set(value)
+
 def parsing_ejbca(filepath, baris_awal) :
-    data = []
+    data = []    
+    n = 0
+    jumlah = 0
     n_line = 0
     with open(filepath, 'r') as fin:
         n_line = len(fin.readlines())
@@ -153,15 +171,22 @@ def parsing_ejbca(filepath, baris_awal) :
             elif "Some chars stripped." in Deskripsi and "<script>" not in Deskripsi:
                 ErrorDB = "Command Injection (Injection)"
             elif "brute force" in Deskripsi:
-                        ErrorDB ="Brute Force Attempt (Security Misconfiguration)"
+                    ErrorDB ="Brute Force Attempt (Security Misconfiguration)"
             else:
                 ErrorDB = "Not Error"
+            jumlah = jumlah + 1
+            if "Non Exploit" in ErrorDB:
+                n = n + 1
             if ErrorDB != "Not Error":
                 print((tanggal, timestamp, level, event_name, server_port, Deskripsi, ErrorDB))
                 add_data_firebase_ejbca(tanggal, timestamp, level, event_name, server_port, Deskripsi, ErrorDB)
+    add_data_non_exploit(n)
+    add_data_total_deteksi(jumlah)
 
 def parsing_terminal(filepath, baris_awal) :
     tanggal = datetime.today()
+    n = 0
+    jumlah = 0
     n_line = 0
     with open(filepath, 'r') as snort_logfile:
         n_line = len(snort_logfile.readlines())
@@ -194,8 +219,8 @@ def parsing_snort(filepath, baris_awal):
     desk = (pyp.Suppress("* ") + pyp.Regex("(.+)+") )
 
     bnf = header +cls +pri + date+ network+port
-    
-
+    n = 0
+    jumlah = 0
     n_line = 0
     with open(filepath, 'r') as snort_logfile:
         n_line = len(snort_logfile.readlines())
@@ -224,22 +249,29 @@ def parsing_snort(filepath, baris_awal):
                     #Kolom exploit
                     if "decode fails" in strippedkelas:
                         ErrorDB = "Upload Error (Broken Access Control)"
-                    elif "Invalid DN" and "':" in strippedkelas:
+                    elif "SQL" in strippedkelas:
                         ErrorDB = "SQL Injection (Injection)"
-                    elif "<script>" in strippedkelas:
+                    elif "XSS" in strippedkelas:
                         ErrorDB = "XSS (Injection/SSRF)"
                     elif "Some chars stripped." in strippedkelas and "<script>" not in strippedkelas:
                         ErrorDB = "Command Injection (Injection)"
-                    elif "brute force" in strippedkelas:
+                    elif "Brute Force" in strippedkelas:
                         ErrorDB ="Brute Force Attempt (Security Misconfiguration)"
                     else: 
                         ErrorDB = "Non Exploit"
-                    if ErrorDB != "Not Error":
+                    jumlah = jumlah + 1
+                    if "Non Exploit" in ErrorDB:
+                        n = n + 1
+                    if ErrorDB != "Non Exploit":
                         print(strippedid, strippedkelas, strippedprior, strippedtgl, strippedplbhn, strippedjaringan, strippedip, strippeddeskripsi, ErrorDB)
                         add_data_firebase_snort(strippedid, strippedkelas, strippedprior, strippedtgl, strippedplbhn, strippedjaringan, strippedip, strippeddeskripsi, ErrorDB)
+    add_data_non_exploit(n)
+    add_data_total_deteksi(jumlah)
 
 def parsing_server(filepath, baris_awal) :
     data = []
+    n = 0
+    jumlah = 0
     n_line = 0
     with open(filepath, 'r') as fin:
         n_line = len(fin.readlines())
@@ -305,6 +337,7 @@ def parsing_server(filepath, baris_awal) :
             module = Deskripsi[Deskripsi.index(runtime) + len(runtime):]
             print((tanggal, timestamp, level, event_name, server_port, Deskripsi, module))
             add_data_serverlog(tanggal, timestamp, level, event_name, server_port, Deskripsi, module)
+    
 
 def length_file(filename):
     with open(filename) as f:
@@ -328,6 +361,7 @@ def main_ejbca():
     linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/Firebase/linecount.txt"
     my_file = Path(linecountpath)
     errorline = "A09:2021 - Secure Logging and Monitoring Failures"
+    acceptedline = "Secure Logging and Monitoring Detected"
     if not my_file.is_file():
         with open (linecountpath, "w") as lc:
             lc.write("0")
@@ -335,12 +369,13 @@ def main_ejbca():
     from_line = 0
     with open(linecountpath, "r") as f :
         from_line = int(f.readline())
-    filepath1 = '/home/ihsanfr/Kode_TA_Ihsan/ejbca1.log'
+    filepath1 = '/home/ihsanfr/Kode_TA_Ihsan/ejbca12.log'
 
     tanggal = date.today()
     if isfile(filepath1):
         linecount(filepath1, linecountpath)
         parsing_ejbca(filepath1, from_line)
+        add_data_log_failure(tanggal, acceptedline,filepath1)
     else:
         print(errorline)
         add_data_log_failure(tanggal, errorline, filepath1)
@@ -349,6 +384,7 @@ def main_snort():
     linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/Firebase/snortlinecount.txt"
     my_file = Path(linecountpath)
     errorline = "A09:2021 - Secure Logging and Monitoring Failures"
+    acceptedline = "Secure Logging and Monitoring Detected"
     if not my_file.is_file():
         with open (linecountpath, "w") as lc:
             lc.write("0")
@@ -360,6 +396,7 @@ def main_snort():
     if isfile(filepath1):
         linecount(filepath1, linecountpath)
         parsing_snort(filepath1, from_line)
+        add_data_log_failure(tanggal, acceptedline,filepath1)
     else:
         print(errorline)
         add_data_log_failure(tanggal, errorline, filepath1)
@@ -368,6 +405,7 @@ def main_server():
     linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/serverlinecount.txt"
     my_file = Path(linecountpath)
     errorline = "A09:2021 - Secure Logging and Monitoring Failures"
+    acceptedline = "Secure Logging and Monitoring Detected"
     if not my_file.is_file():
         with open (linecountpath, "w") as lc:
             lc.write("0")
@@ -379,6 +417,7 @@ def main_server():
     if isfile(filepath1):
         linecount(filepath1, linecountpath)
         parsing_server(filepath1, from_line)
+        add_data_log_failure(tanggal, acceptedline,filepath1)
     else:
         print(errorline)
         add_data_log_failure(tanggal, errorline, filepath1)
@@ -387,6 +426,7 @@ def main_terminal():
     linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/linecountterminal_firebase.txt"
     my_file = Path(linecountpath)
     errorline = "A09:2021 - Secure Logging and Monitoring Failures"
+    acceptedline = "Secure Logging and Monitoring Detected"
     if not my_file.is_file():
         with open (linecountpath, "w") as lc:
             lc.write("0")
@@ -399,6 +439,7 @@ def main_terminal():
     if isfile(filepath1):
         linecount(filepath1, linecountpath)
         parsing_terminal(filepath1, from_line)
+        add_data_log_failure(tanggal, acceptedline,filepath1)
     else:
         print(errorline)
         add_data_log_failure(tanggal, errorline, filepath1)
