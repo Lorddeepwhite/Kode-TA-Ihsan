@@ -175,9 +175,9 @@ def parsing_ejbca(filepath, baris_awal) :
             else:
                 ErrorDB = "Not Error"
             jumlah = jumlah + 1
-            if "Non Exploit" in ErrorDB:
+            if "Not Error" in ErrorDB:
                 n = n + 1
-            if ErrorDB != "Not Error":
+            if ErrorDB != "Not Error" :
                 print((tanggal, timestamp, level, event_name, server_port, Deskripsi, ErrorDB))
                 add_data_firebase_ejbca(tanggal, timestamp, level, event_name, server_port, Deskripsi, ErrorDB)
     add_data_non_exploit(n)
@@ -357,8 +357,8 @@ def linecount(filename, linecountpath):
             lc.seek(0)
             lc.write(str(i))
 
-def main_ejbca():
-    linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/Firebase/linecount.txt"
+def main_ejbca(filepath1):
+    linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/linecount/ejbcalinecount.txt"
     my_file = Path(linecountpath)
     errorline = "A09:2021 - Secure Logging and Monitoring Failures"
     acceptedline = "Secure Logging and Monitoring Detected"
@@ -369,7 +369,6 @@ def main_ejbca():
     from_line = 0
     with open(linecountpath, "r") as f :
         from_line = int(f.readline())
-    filepath1 = '/home/ihsanfr/Kode_TA_Ihsan/ejbca12.log'
 
     tanggal = date.today()
     if isfile(filepath1):
@@ -380,8 +379,8 @@ def main_ejbca():
         print(errorline)
         add_data_log_failure(tanggal, errorline, filepath1)
 
-def main_snort():
-    linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/Firebase/snortlinecount.txt"
+def main_snort(filepath1):
+    linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/linecount/snortlinecount.txt"
     my_file = Path(linecountpath)
     errorline = "A09:2021 - Secure Logging and Monitoring Failures"
     acceptedline = "Secure Logging and Monitoring Detected"
@@ -390,7 +389,6 @@ def main_snort():
             lc.write("0")
     tanggal = date.today()
     from_line = 0
-    filepath1 = "/home/ihsanfr/Kode_TA_Ihsan/alert1.txt"
     with open(linecountpath, "r") as f :
         from_line = int(f.readline())
     if isfile(filepath1):
@@ -402,7 +400,7 @@ def main_snort():
         add_data_log_failure(tanggal, errorline, filepath1)
 
 def main_server():
-    linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/serverlinecount.txt"
+    linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/linecount/serverlinecount.txt"
     my_file = Path(linecountpath)
     errorline = "A09:2021 - Secure Logging and Monitoring Failures"
     acceptedline = "Secure Logging and Monitoring Detected"
@@ -422,8 +420,8 @@ def main_server():
         print(errorline)
         add_data_log_failure(tanggal, errorline, filepath1)
 
-def main_terminal():
-    linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/linecountterminal_firebase.txt"
+def main_terminal(filepath1):
+    linecountpath = "/home/ihsanfr/Kode_TA_Ihsan/linecount/linecountterminal_firebase.txt"
     my_file = Path(linecountpath)
     errorline = "A09:2021 - Secure Logging and Monitoring Failures"
     acceptedline = "Secure Logging and Monitoring Detected"
@@ -434,7 +432,6 @@ def main_terminal():
     from_line = 0
     with open(linecountpath, "r") as f :
         from_line = int(f.readline())
-    filepath1 = '/home/ihsanfr/Kode_TA_Ihsan/tes.log'
 
     if isfile(filepath1):
         linecount(filepath1, linecountpath)
