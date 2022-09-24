@@ -22,5 +22,3 @@ alert tcp any any -> $HOME_NET any (msg: "UNION SELECT SQL Injection"; content: 
 
 alert tcp any any -> $HOME_NET any (msg:"Brute Force Detected"; flow:from_server,established; detection_filter:track by_dst, count 5, seconds 60; metadata: service smtp; classtype:suspicious-login; sid:2278; rev:2;)
 
-alert tcp any any -> $HOME_NET any (msg: "Faras detected"; content: "faras" ; sid:10000013; )
-
